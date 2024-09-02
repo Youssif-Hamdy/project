@@ -1,0 +1,35 @@
+{% extends "main/components/base.html" %}
+
+{% block title %}
+    Task Details - {{ task.title }}
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header">
+            <h2 class="mb-0">{{ task.title }}</h2>
+        </div>
+        <div class="card-body">
+            <p class="lead">{{ task.description }}</p>
+            <p><strong>Status:</strong> 
+                {% if task.status == "PENDING" %}
+                    <span class="badge bg-secondary">Pending</span>
+                {% elif task.status == "IN PROGRESS" %}
+                    <span class="badge bg-warning text-dark">In Progress</span>
+                {% else %}
+                    <span class="badge bg-success">Completed</span>
+                {% endif %}
+            </p>
+            <p><strong>Category:</strong> {{ task.category.name }}</p>
+            <p><strong>Due Date:</strong> {{ task.due_date|date:"F j, Y" }}</p>
+            <p><strong>Created at:</strong> {{ task.created_at|date:"F j, Y, g:i a" }}</p>
+            <p><strong>Updated at:</strong> {{ task.updated_at|date:"F j, Y, g:i a" }}</p>
+        </div>
+        <div class="card-footer text-end">
+            <a href="{% url 'category_tasks' task.category.id %}" class="btn btn-outline-primary">Back to {{ task.category.name }} Tasks</a>
+            <a href="{% url 'home' %}" class="btn btn-secondary">Back to Home</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
